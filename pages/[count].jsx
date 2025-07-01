@@ -113,7 +113,7 @@ export async function getStaticProps() {
     console.error('Cannot read cards directory', err);
   }
   const cards = files.map((file) => {
-    const key = file.replace(/\.(jpg|jpeg)$/i, '');
+    const key = file.replace(/\.(jpg|jpeg|png|webp)$/i, '');
     return {
       file,
       name: key,
@@ -152,7 +152,10 @@ export default function CardsPage({ cards }) {
 
   const handleContinue = () => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      console.log('sending to bot', selected);
       window.Telegram.WebApp.sendData(JSON.stringify({ cards: selected }));
+    } else {
+      console.log('Telegram WebApp not found');
     }
   };
 
