@@ -70,17 +70,25 @@ export default function CardsPage({ cards }) {
     }
   };
 
-  let title = `Ты выбрал ${selected.length} из ${cardsToPick}, выбери ещё`;
+  let titleNode;
   if (selected.length === 0) {
-    title = `Выбери ${cardsToPick} ${cardsToPick === 1 ? 'карту' : 'карты'}`;
+    titleNode = `Выбери ${cardsToPick} ${cardsToPick === 1 ? 'карту' : 'карты'}`;
   } else if (selected.length === cardsToPick) {
-    title = 'Отлично, нажми кнопку продолжить';
+    titleNode = 'Отлично, нажми кнопку продолжить';
+  } else {
+    titleNode = (
+      <>
+        {`Ты выбрал(а) ${selected.length} из ${cardsToPick}`}
+        <br />
+        выбери ещё
+      </>
+    );
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center pt-3 text-white relative">
       <div className="overlay"></div>
-      <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{title}</h1>
+      <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{titleNode}</h1>
       <div className="grid grid-cols-3 gap-2" id="cardsContainer">
         {deck.map((card) => (
           <button
