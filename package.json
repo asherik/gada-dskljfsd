@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "optimize-images": "node scripts/optimize-images.js",
-    "build": "npm run optimize-images && next build && next export",
+    "build": "npm run optimize-images && next build",
     "start": "serve -s out -l 5000"
   },
   "dependencies": {
