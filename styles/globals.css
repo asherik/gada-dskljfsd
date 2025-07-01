@@ -12,6 +12,7 @@ body {
 
 .perspective {
   perspective: 1000px;
+  margin: 0 auto;
 }
 .backface-hidden {
   backface-visibility: hidden;
@@ -92,4 +93,10 @@ h1 {
 :root {
   --tg-viewport-height: 100vh;
   --tg-viewport-stable-height: 100vh;
+}
+
+.card-button {
+  width: 100%;
+  aspect-ratio: 3 / 5; /* maintains proportion */
+  position: relative;
 } 

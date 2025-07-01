@@ -82,37 +82,39 @@ export default function CardsPage({ cards }) {
   return (
     <div className="flex flex-col items-center pt-3 text-white relative" style={{minHeight: 'var(--tg-viewport-height)'}}>
       <div className="overlay"></div>
-      <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{titleNode}</h1>
-      <div className="grid grid-cols-3 gap-2 sm:gap-3" id="cardsContainer">
-        {deck.map((card) => (
-          <button
-            key={card.file}
-            onClick={() => handleClick(card)}
-            className={`relative w-24 h-36 sm:w-28 sm:h-44 md:w-32 md:h-48 perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
-          >
-            <div className={`preserve-3d h-full w-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
-              {/* back */}
-              <div className="absolute inset-0 backface-hidden">
-                <Image src="/textures/card_back.png" alt="back" fill sizes="128px" />
+      <div className="w-full max-w-[500px] px-4">
+        <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{titleNode}</h1>
+        <div className="grid grid-cols-3 gap-3 w-full max-w-[500px]" id="cardsContainer" style={{gridTemplateRows:'repeat(3, auto)'}}>
+          {deck.map((card) => (
+            <button
+              key={card.file}
+              onClick={() => handleClick(card)}
+              className={`card-button perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
+            >
+              <div className={`preserve-3d w-full h-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
+                {/* back */}
+                <div className="absolute inset-0 backface-hidden">
+                  <Image src="/textures/card_back.png" alt="back" fill sizes="128px" />
+                </div>
+                {/* front */}
+                <div className="absolute inset-0 rotate-y-180 backface-hidden">
+                  <Image src={`/cards/${card.file}`} alt={card.name} fill sizes="128px" />
+                </div>
               </div>
-              {/* front */}
-              <div className="absolute inset-0 rotate-y-180 backface-hidden">
-                <Image src={`/cards/${card.file}`} alt={card.name} fill sizes="128px" />
-              </div>
-            </div>
-          </button>
-        ))}
-      </div>
+            </button>
+          ))}
+        </div>
 
-      {selected.length === cardsToPick && (
-        <button
-          id="continueBtn"
-          onClick={handleContinue}
-          className="mt-6 px-8 py-4 bg-yellow-500 rounded text-black font-semibold"
-        >
-          Продолжить
-        </button>
-      )}
+        {selected.length === cardsToPick && (
+          <button
+            id="continueBtn"
+            onClick={handleContinue}
+            className="mt-6 px-8 py-4 bg-yellow-500 rounded text-black font-semibold"
+          >
+            Продолжить
+          </button>
+        )}
+      </div>
     </div>
   );
 } 
