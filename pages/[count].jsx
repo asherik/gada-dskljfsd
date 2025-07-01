@@ -78,13 +78,13 @@ export default function CardsPage({ cards }) {
 
   return (
     <div className="min-h-screen flex flex-col items-center pt-3 text-white">
-      <h1 className="text-2xl font-bold mb-3 text-center">{title}</h1>
+      <h1 className="font-bold mb-3 text-center">{title}</h1>
       <div className="grid grid-cols-3 gap-2" id="cardsContainer">
         {deck.map((card) => (
           <button
             key={card.file}
             onClick={() => handleClick(card)}
-            className={`relative w-32 h-48 perspective ${selected.includes(card.name) ? 'cursor-default' : 'cursor-pointer'}`}
+            className={`relative w-28 h-44 perspective ${selected.includes(card.name) ? 'cursor-default' : 'cursor-pointer'}`}
           >
             <div className={`preserve-3d h-full w-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
               {/* back */}
@@ -104,7 +104,7 @@ export default function CardsPage({ cards }) {
         <button
           id="continueBtn"
           onClick={handleContinue}
-          className="mt-3 px-6 py-3 bg-yellow-500 rounded text-black font-semibold"
+          className="mt-6 px-6 py-3 bg-yellow-500 rounded text-black font-semibold"
         >
           Продолжить
         </button>

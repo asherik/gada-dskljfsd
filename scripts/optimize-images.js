@@ -23,8 +23,19 @@ for (const dir of [cardsOutput, texturesOutput]) {
 
 async function optimize(file, destination) {
   const ext = path.extname(file).toLowerCase();
-  const fileName = path.basename(file, ext) + '.jpg';
-  const outPath = path.join(destination, fileName);
+  let outPath;
+  let pipeline = sharp(file).rotate();
+
+  if (ext === '.png') {
+    // сохранение прозрачности и оптимизация PNG
+    outPath = path.join(destination, path.basename(file));
+    pipeline = pipeline.png({ compressionLevel: 9, adaptiveFiltering: true });
+  } else {
+    // остальные форматы -> JPG
+    const fileName = path.basename(file, ext) + '.jpg';
+    outPath = path.join(destination, fileName);
+    pipeline = pipeline.jpeg({ quality: 70, progressive: true });
+  }
 
   // Skip if already processed & up to date
   if (fs.existsSync(outPath)) {
@@ -36,10 +47,7 @@ async function optimize(file, destination) {
   }
 
   try {
-    await sharp(file)
-      .rotate()
-      .jpeg({ quality: 70, progressive: true })
-      .toFile(outPath);
+    await pipeline.toFile(outPath);
     console.log('Optimized', outPath);
   } catch (err) {
     console.error('Error optimizing', file, err);
