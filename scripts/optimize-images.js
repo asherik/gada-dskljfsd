@@ -27,9 +27,13 @@ async function optimize(file, destination) {
   let pipeline = sharp(file).rotate();
 
   if (ext === '.png') {
-    // сохранение прозрачности и оптимизация PNG
+    // просто копируем PNG, чтобы не нарушить прозрачность
     outPath = path.join(destination, path.basename(file));
-    pipeline = pipeline.png({ compressionLevel: 9, adaptiveFiltering: true });
+    if (!fs.existsSync(outPath)) {
+      fs.copyFileSync(file, outPath);
+      console.log('Copied', outPath);
+    }
+    return; // дальше оптимизация не нужна
   } else {
     // остальные форматы -> JPG
     const fileName = path.basename(file, ext) + '.jpg';
