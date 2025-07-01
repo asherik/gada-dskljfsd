@@ -79,8 +79,10 @@ h1 {
 
 .text-large-title {
   font-size: clamp(2rem, 4vh, 4rem);
+  border-style: solid;
 }
 
 .selected {
-  box-shadow: 0 0 8px 2px rgba(255, 131, 253, 0.6);
+  box-shadow: 0 0 15px 8px rgba(255, 131, 253, 0.8);
+  border-radius: 12px;
 } 
