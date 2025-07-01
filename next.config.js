@@ -4,7 +4,6 @@ const nextConfig = {
   basePath: '/gadalka-app',
   images: {
     formats: ['image/avif', 'image/webp'],
-    quality: 70,
     unoptimized: false,
   },
 };
