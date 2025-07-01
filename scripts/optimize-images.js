@@ -11,6 +11,7 @@ const legacyDirs = [
   path.join(rootDir, 'old', 'gadalkaaaaa', 'css', 'textures'),
 ];
 
+
 const outputDir = path.join(rootDir, 'public');
 const cardsOutput = path.join(outputDir, 'cards');
 const texturesOutput = path.join(outputDir, 'textures');
