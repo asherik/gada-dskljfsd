@@ -1,10 +1,9 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === 'production';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 const nextConfig = {
   output: 'export',
-  // basePath нужен только для GitHub Pages; в dev-режиме он мешает
-  ...(isProd ? { basePath: '/gadalka-app' } : {}),
+  ...(basePath ? { basePath } : {}),
   images: {
     formats: ['image/avif', 'image/webp'],
     unoptimized: true,
