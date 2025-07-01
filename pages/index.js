@@ -1,10 +1,7 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-
 export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    router.replace('/3');
-  }, [router]);
-  return null;
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <h1 className="text-4xl font-bold">gadal</h1>
+    </div>
+  );
 } 

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import path from 'path';
+import fs from 'fs';
 
 // Simple shuffle util
 function shuffle(array) {
@@ -12,16 +14,22 @@ function shuffle(array) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { count: '1' } }, { params: { count: '3' } }],
+    paths: [
+      { params: { count: '1' } },
+      { params: { count: '3' } },
+    ],
     fallback: false,
   };
 }
 
 export async function getStaticProps() {
-  const { default: path } = await import('path');
-  const { default: fs } = await import('fs');
   const cardsDir = path.join(process.cwd(), 'public', 'cards');
-  const files = fs.readdirSync(cardsDir);
+  let files = [];
+  try {
+    files = fs.readdirSync(cardsDir);
+  } catch (err) {
+    console.error('Cannot read cards directory', err);
+  }
   const cards = files.map((file) => ({
     file,
     name: file.replace(/\.(jpg|jpeg)$/i, ''),
@@ -32,7 +40,8 @@ export async function getStaticProps() {
 export default function CardsPage({ cards }) {
   const router = useRouter();
   const { count } = router.query;
-  const cardsToPick = Number(count) === 1 ? 1 : 3;
+  const cnt = Number(count);
+  const cardsToPick = cnt === 1 ? 1 : 3;
   const [deck, setDeck] = useState([]);
   const [selected, setSelected] = useState([]);
 
@@ -60,10 +69,17 @@ export default function CardsPage({ cards }) {
     }
   };
 
+  let title = `Ты выбрал ${selected.length} из ${cardsToPick}, выбери ещё`;
+  if (selected.length === 0) {
+    title = `Выбери ${cardsToPick} ${cardsToPick === 1 ? 'карту' : 'карты'}`;
+  } else if (selected.length === cardsToPick) {
+    title = 'Отлично, нажми кнопку продолжить';
+  }
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-purple-800 py-10 text-white">
-      <h1 className="text-2xl font-bold mb-6">Выберите {cardsToPick} карта(ы)</h1>
-      <div className="grid grid-cols-3 gap-4" id="cardsContainer">
+    <div className="min-h-screen flex flex-col items-center pt-3 text-white">
+      <h1 className="text-2xl font-bold mb-3 text-center">{title}</h1>
+      <div className="grid grid-cols-3 gap-2" id="cardsContainer">
         {deck.map((card) => (
           <button
             key={card.file}
@@ -88,7 +104,7 @@ export default function CardsPage({ cards }) {
         <button
           id="continueBtn"
           onClick={handleContinue}
-          className="mt-8 px-6 py-3 bg-yellow-500 rounded text-black font-semibold"
+          className="mt-3 px-6 py-3 bg-yellow-500 rounded text-black font-semibold"
         >
           Продолжить
         </button>
