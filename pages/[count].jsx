@@ -12,6 +12,88 @@ function shuffle(array) {
     .map(({ value }) => value);
 }
 
+// Mapping from filename (without extension) to Russian card name
+const fileToRu = {
+  'the_chariot': 'Колесница',
+  'the_fool': 'Шут',
+  'the_magician': 'Волшебник',
+  'the_high_priestess': 'Верховная жрица',
+  'the_empress': 'Императрица',
+  'the_emperor': 'Император',
+  'the_hierophant': 'Иерофант',
+  'the_star': 'Звезда',
+  'the_sun': 'Солнце',
+  'the_lovers': 'Любовник',
+  'strength': 'Сила',
+  'the_hermit': 'Отшельник',
+  'justice': 'Судья',
+  'wheel_of_fortune': 'Колесо удачи',
+  'death': 'Смерть',
+  'the_handed_man': 'Повешенный человек',
+  'temperance': 'Сдержанность',
+  'the_world': 'Мир',
+  'judgement': 'Кара',
+  'the_moon': 'Луна',
+  'the_tower': 'Башня',
+  'the_devil': 'Дьявол',
+  '1d': 'Туз Денариев',
+  '2d': '2 Пентаклей',
+  '3d': '3 Пентаклей',
+  '4d': '4 Пентаклей',
+  '5d': '5 Пентаклей',
+  '6d': '6 Пентаклей',
+  '7d': '7 Пентаклей',
+  '8d': '8 Пентаклей',
+  '9d': '9 Пентаклей',
+  '10d': '10 Пентаклей',
+  'knight_pentacles': 'Король Пентаклей',
+  'qd': 'Королева Пентаклей',
+  'kd': 'Рыцарь Пентаклей',
+  'pd': 'Паж Пентаклей',
+  '1s': 'Туз Мечей',
+  '2s': '2 Мечей',
+  '3s': '3 Мечей',
+  '4s': '4 Мечей',
+  '5s': '5 Мечей',
+  '6s': '6 Мечей',
+  '7s': '7 Мечей',
+  '8s': '8 Мечей',
+  '9s': '9 Мечей',
+  '10s': '10 Мечей',
+  'ks': 'Рыцарь Мечей',
+  'ps': 'Паж Мечей',
+  'king_swords': 'Король Мечей',
+  'qs': 'Королева Мечей',
+  '1g': 'Туз Жезлов',
+  '2g': '2 Жезлов',
+  '3g': '3 Жезлов',
+  '4g': '4 Жезлов',
+  '5g': '5 Жезлов',
+  '6g': '6 Жезлов',
+  '7g': '7 Жезлов',
+  '8g': '8 Жезлов',
+  '9g': '9 Жезлов',
+  '10g': '10 Жезлов',
+  'qg': 'Королева Жезлов',
+  'kg': 'Рыцарь Жезлов',
+  'pg': 'Паж Жезлов',
+  'king_g': 'Король Жезлов',
+  '1c': 'Туз Кубков',
+  '2c': '2 Кубков',
+  '3c': '3 Кубков',
+  '4c': '4 Кубков',
+  '5c': '5 Кубков',
+  '6c': '6 Кубков',
+  '7c': '7 Кубков',
+  '8c': '8 Кубков',
+  '9c': '9 Кубков',
+  '10c': '10 Кубков',
+  'king_c': 'Король Кубков',
+  'qc': 'Королева Кубков',
+  'kc': 'Рыцарь Кубков',
+  'pc': 'Паж Кубков'
+};
+
 export async function getStaticPaths() {
   return {
     paths: [
@@ -30,10 +112,14 @@ export async function getStaticProps() {
   } catch (err) {
     console.error('Cannot read cards directory', err);
   }
-  const cards = files.map((file) => ({
-    file,
-    name: file.replace(/\.(jpg|jpeg)$/i, ''),
-  }));
+  const cards = files.map((file) => {
+    const key = file.replace(/\.(jpg|jpeg)$/i, '');
+    return {
+      file,
+      name: key,
+      ru: fileToRu[key] || key,
+    };
+  });
   return { props: { cards } };
 }
 
@@ -59,9 +145,9 @@ export default function CardsPage({ cards }) {
   }, [cards]);
 
   const handleClick = (card) => {
-    if (selected.includes(card.name)) return;
+    if (selected.includes(card.ru)) return;
     if (selected.length >= cardsToPick) return;
-    setSelected((prev) => [...prev, card.name]);
+    setSelected((prev) => [...prev, card.ru]);
   };
 
   const handleContinue = () => {
@@ -89,9 +175,9 @@ export default function CardsPage({ cards }) {
             <button
               key={card.file}
               onClick={() => handleClick(card)}
-              className={`card-button perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
+              className={`card-button perspective ${selected.includes(card.ru) ? 'selected cursor-default' : 'cursor-pointer'}`}
             >
-              <div className={`preserve-3d w-full h-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
+              <div className={`preserve-3d w-full h-full duration-500 ${selected.includes(card.ru) ? 'rotate-y-180' : ''}`}>
                 {/* back */}
                 <div className="absolute inset-0 backface-hidden">
                   <Image src="/textures/card_back.png" alt="back" fill sizes="128px" />
