@@ -74,27 +74,21 @@ export default function CardsPage({ cards }) {
   if (selected.length === 0) {
     titleNode = `Выбери ${cardsToPick} ${cardsToPick === 1 ? 'карту' : 'карты'}`;
   } else if (selected.length === cardsToPick) {
-    titleNode = 'Отлично, нажми кнопку продолжить';
+    titleNode = 'Отлично, нажми на кнопку «Продолжить»';
   } else {
-    titleNode = (
-      <>
-        {`Ты выбрал(а) ${selected.length} из ${cardsToPick}`}
-        <br />
-        выбери ещё
-      </>
-    );
+    titleNode = `Ты выбрал(а) ${selected.length} из ${cardsToPick}`;
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center pt-3 text-white relative">
+    <div className="flex flex-col items-center pt-3 text-white relative" style={{minHeight: 'var(--tg-viewport-height)'}}>
       <div className="overlay"></div>
       <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{titleNode}</h1>
-      <div className="grid grid-cols-3 gap-1 sm:gap-2" id="cardsContainer">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3" id="cardsContainer">
         {deck.map((card) => (
           <button
             key={card.file}
             onClick={() => handleClick(card)}
-            className={`relative w-20 h-32 sm:w-24 sm:h-36 md:w-28 md:h-44 perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
+            className={`relative w-24 h-36 sm:w-28 sm:h-44 md:w-32 md:h-48 perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
           >
             <div className={`preserve-3d h-full w-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
               {/* back */}

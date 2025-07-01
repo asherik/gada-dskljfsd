@@ -87,4 +87,9 @@ h1 {
 .selected {
   box-shadow: 0 0 15px 8px rgba(255, 131, 253, 0.8);
   border-radius: 12px;
+}
+
+:root {
+  --tg-viewport-height: 100vh;
+  --tg-viewport-stable-height: 100vh;
 } 
