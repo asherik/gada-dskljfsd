@@ -89,12 +89,12 @@ export default function CardsPage({ cards }) {
     <div className="min-h-screen flex flex-col items-center pt-3 text-white relative">
       <div className="overlay"></div>
       <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{titleNode}</h1>
-      <div className="grid grid-cols-3 gap-2" id="cardsContainer">
+      <div className="grid grid-cols-3 gap-1 sm:gap-2" id="cardsContainer">
         {deck.map((card) => (
           <button
             key={card.file}
             onClick={() => handleClick(card)}
-            className={`relative w-28 h-44 perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
+            className={`relative w-20 h-32 sm:w-24 sm:h-36 md:w-28 md:h-44 perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
           >
             <div className={`preserve-3d h-full w-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
               {/* back */}
