@@ -109,7 +109,7 @@ export default function CardsPage({ cards }) {
           <button
             id="continueBtn"
             onClick={handleContinue}
-            className="mt-6 px-8 py-4 bg-yellow-500 rounded text-black font-semibold"
+            className="mt-6 px-8 py-4 bg-yellow-500 rounded text-black font-semibold block mx-auto"
           >
             Продолжить
           </button>
