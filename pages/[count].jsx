@@ -44,6 +44,7 @@ export default function CardsPage({ cards }) {
   const cardsToPick = cnt === 1 ? 1 : 3;
   const [deck, setDeck] = useState([]);
   const [selected, setSelected] = useState([]);
+  const isInitial = selected.length === 0;
 
   useEffect(() => {
     // Prepare 9 random cards for layout
@@ -77,19 +78,20 @@ export default function CardsPage({ cards }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center pt-3 text-white">
-      <h1 className="font-bold mb-3 text-center">{title}</h1>
+    <div className="min-h-screen flex flex-col items-center pt-3 text-white relative">
+      <div className="overlay"></div>
+      <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{title}</h1>
       <div className="grid grid-cols-3 gap-2" id="cardsContainer">
         {deck.map((card) => (
           <button
             key={card.file}
             onClick={() => handleClick(card)}
-            className={`relative w-28 h-44 perspective ${selected.includes(card.name) ? 'cursor-default' : 'cursor-pointer'}`}
+            className={`relative w-28 h-44 perspective ${selected.includes(card.name) ? 'selected cursor-default' : 'cursor-pointer'}`}
           >
             <div className={`preserve-3d h-full w-full duration-500 ${selected.includes(card.name) ? 'rotate-y-180' : ''}`}>
               {/* back */}
               <div className="absolute inset-0 backface-hidden">
-                <Image src="/textures/card_back.jpg" alt="back" fill sizes="128px" />
+                <Image src="/textures/card_back.png" alt="back" fill sizes="128px" />
               </div>
               {/* front */}
               <div className="absolute inset-0 rotate-y-180 backface-hidden">
@@ -104,7 +106,7 @@ export default function CardsPage({ cards }) {
         <button
           id="continueBtn"
           onClick={handleContinue}
-          className="mt-6 px-6 py-3 bg-yellow-500 rounded text-black font-semibold"
+          className="mt-6 px-8 py-4 bg-yellow-500 rounded text-black font-semibold"
         >
           Продолжить
         </button>
