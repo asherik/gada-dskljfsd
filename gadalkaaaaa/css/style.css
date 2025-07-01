@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: url('textures/backgroundd.jpg') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+h1 {
+    font-family: "Gilroy", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: clamp(2rem, 4vh, 4rem) !important;
+    color: white;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 2rem !important;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 12px;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 1rem;
+}
+
+.tarot-card {
+    position: relative;
+    perspective: 1000px;
+    width: 100%;
+    aspect-ratio: 1.5 / 2.5;
+    overflow: hidden;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tarot-card .highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 15px rgba(255, 131, 253, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tarot-card.selected .highlight {
+    opacity: 1;
+}
+
+.card-back,
+.card-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 6px;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card-back {
+    background-image: url('textures/card_back.png');
+    transform: rotateY(0deg);
+    background-size: 100% 100%;
+}
+
+.card-placeholder {
+    transform: rotateY(180deg);
+    background-size: 100% 100%;
+    background-position: center;
+    background-color: white;
+    background-repeat: no-repeat;
+}
+
+.flipped .card-back {
+    transform: rotateY(180deg);
+}
+
+.flipped .card-placeholder {
+    transform: rotateY(0deg);
+}
+
+.selected {
+    box-shadow: 0 0 15px 8px rgba(255, 131, 253, 0.8);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(62, 43, 102, 0.7);
+    z-index: -1;
+}
+
+#continueBtn {
+    background: linear-gradient(to top,
+    rgba(206, 105, 155, 1),
+    rgba(244, 145, 161, 1),
+    rgba(253, 187, 171, 1));
+    border: 2px solid rgba(255, 255, 255, 1);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-family: "Gilroy", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    margin-top: 2rem;
+}
+
+#continueBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(255, 131, 253, 0.5);
+}
+
+#continueBtn.hidden {
+    display: none;
+}
+
+@font-face {
+    font-family: "Gilroy";
+    src: url("../font/ofont.ru_Gilroy.ttf");
+}
+
+@media (max-width: 480px) {
+    .cards-container {
+        gap: 8px;
+        max-width: 300px;
+    }
+
+    .tarot-card.selected {
+        box-shadow: 0 0 8px 2px rgba(255, 131, 253, 0.6);
+    }
+
+    h1 {
+        font-size: clamp(3rem, 7vh, 7rem); /* Уменьшен для мобильных с 4rem/9vh/9rem */
+    }
+
+    #continueBtn {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+}
