@@ -10,7 +10,7 @@ body {
   background: #5222a3 url('/textures/backgroundd.jpg') center/cover no-repeat fixed;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* контент прижат к верху, без большой пустоты */
   padding: 1rem;
   touch-action: manipulation;
 }
