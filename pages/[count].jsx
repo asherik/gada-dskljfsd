@@ -175,7 +175,7 @@ export default function CardsPage({ cards }) {
   return (
     <div className="flex flex-col items-center pt-3 text-white relative" style={{minHeight: 'var(--tg-viewport-height)'}}>
       <div className="overlay"></div>
-      <div className="w-full max-w-[500px] px-6 sm:px-8">
+      <div style={{width: '85%', margin: '0 auto', paddingLeft: '1.5rem', paddingRight: '1.5rem'}}>
         <h1 className={`hint font-bold mb-3 text-center ${isInitial ? 'text-large-title' : ''}`}>{titleNode}</h1>
         <div className="grid grid-cols-3 gap-3 w-full max-w-[500px]" id="cardsContainer" style={{gridTemplateRows:'repeat(3, auto)'}}>
           {deck.map((card) => (
