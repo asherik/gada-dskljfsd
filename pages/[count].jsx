@@ -141,6 +141,10 @@ export default function CardsPage({ cards }) {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       window.Telegram.WebApp.ready();
       window.Telegram.WebApp.expand();
+      // При изменении размера окна (например, клавиатура / ресайз десктоп-клиента)
+      window.Telegram.WebApp.onEvent('viewportChanged', () => {
+        window.Telegram.WebApp.expand();
+      });
     }
   }, [cards]);
 

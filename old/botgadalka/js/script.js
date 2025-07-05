@@ -1,9 +1,11 @@
-
-
-
 // Инициализация Telegram WebApp
 window.Telegram.WebApp.ready();
 window.Telegram.WebApp.expand();
+
+// Раскрываем окно повторно при изменении viewport (десктоп-клиент, клавиатура)
+window.Telegram.WebApp.onEvent('viewportChanged', () => {
+  window.Telegram.WebApp.expand();
+});
 
 // Функция для получения параметра start_param
 
